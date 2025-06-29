@@ -24,3 +24,8 @@ personal-notes/
 dev-diary.txt
 learning-notes.md
 project-ideas.txt
+
+
+*.mov
+*.mp4
+
