@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', function() {
             themeIcon.classList.replace('fa-sun', 'fa-moon');
             switchToOriginalLayout();
         }
+        
+        // Reinitialize Kareem zoom effect for new theme
+        initKareemZoomEffect();
     });
 });
 
@@ -176,7 +179,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const certTitle = document.getElementById('certTitle');
     const certDescription = document.getElementById('certDescription');
     const certImages = document.querySelectorAll('.cert-image');
-    const indicators = document.querySelectorAll('.indicator');
 
     function updateCertification(index) {
         // Fade out current image first
@@ -188,11 +190,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             certImages[index].classList.add('active');
         }, 150);
-
-        // Update indicators immediately
-        indicators.forEach((indicator, i) => {
-            indicator.classList.toggle('active', i === index);
-        });
 
         // Update text content with slight delay for smoother transition
         setTimeout(() => {
@@ -214,14 +211,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event listeners
     nextBtn.addEventListener('click', nextCertification);
     prevBtn.addEventListener('click', prevCertification);
-
-    // Indicator click events
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            currentCertIndex = index;
-            updateCertification(currentCertIndex);
-        });
-    });
 
     // Auto-advance every 5 seconds
     setInterval(nextCertification, 5000);
@@ -570,6 +559,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize fade-in animations
     initFadeInAnimations();
     
+    // Initialize Kareem section zoom effect for dark mode
+    initKareemZoomEffect();
+    
     // Observe elements for animations
     const animateElements = document.querySelectorAll('.project-card, .article-card, .about-content, .contact-content, .education-item');
     animateElements.forEach(el => {
@@ -579,6 +571,35 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 });
+
+// Kareem section zoom effect on scroll (dark mode only)
+function initKareemZoomEffect() {
+    const kareemSection = document.querySelector('.kareem-profile-section');
+    
+    if (kareemSection) {
+        const kareemObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                
+                if (currentTheme === 'dark') {
+                    if (entry.isIntersecting) {
+                        // Trigger zoom out when user reaches the section
+                        entry.target.classList.add('in-view');
+                        console.log('Kareem section reached - triggering zoom out');
+                    } else {
+                        // Reset when leaving section
+                        entry.target.classList.remove('in-view');
+                    }
+                }
+            });
+        }, {
+            threshold: 0.5, // Trigger when 50% of the section is visible
+            rootMargin: '0px 0px -20% 0px' // Trigger when section is more centered in viewport
+        });
+        
+        kareemObserver.observe(kareemSection);
+    }
+}
 
 // Fade-in animations on scroll for Technologies section
 function initFadeInAnimations() {
@@ -624,3 +645,41 @@ function typeWriter(element, text, speed = 100) {
     
     type();
 }
+
+// Rotating skills text for Kareem profile section (Dark mode only)
+document.addEventListener('DOMContentLoaded', function() {
+    const skillsTexts = [
+        "Cloud, Data and DevOps",
+        "AWS and Azure platforms", 
+        "Data Engineering and Analytics",
+        "Infrastructure as Code",
+        "CI/CD and Automation",
+        "Scalable Cloud Solutions"
+    ];
+    
+    let currentSkillIndex = 0;
+    const rotatingSkillsElement = document.querySelector('.rotating-skills');
+    
+    if (rotatingSkillsElement) {
+        function rotateSkills() {
+            // Only rotate if in dark mode
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                rotatingSkillsElement.style.opacity = '0';
+                
+                setTimeout(() => {
+                    currentSkillIndex = (currentSkillIndex + 1) % skillsTexts.length;
+                    rotatingSkillsElement.textContent = skillsTexts[currentSkillIndex];
+                    rotatingSkillsElement.style.opacity = '1';
+                }, 300);
+            }
+        }
+        
+        // Start rotation
+        setInterval(rotateSkills, 3000);
+        
+        // Set initial opacity and transition
+        rotatingSkillsElement.style.transition = 'opacity 0.3s ease-in-out';
+        rotatingSkillsElement.style.opacity = '1';
+    }
+});
