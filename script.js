@@ -1,4 +1,4 @@
-// Theme Toggle Functionality
+// Theme Toggle Functionality with Layout Switching
 const themeToggle = document.getElementById('theme-toggle');
 const themeIcon = themeToggle.querySelector('i');
 
@@ -9,6 +9,9 @@ document.documentElement.setAttribute('data-theme', currentTheme);
 // Update icon based on current theme
 if (currentTheme === 'dark') {
     themeIcon.classList.replace('fa-moon', 'fa-sun');
+    switchToVideoLayout();
+} else {
+    switchToOriginalLayout();
 }
 
 // Theme toggle event listener
@@ -23,10 +26,68 @@ themeToggle.addEventListener('click', () => {
     // Update icon
     if (newTheme === 'dark') {
         themeIcon.classList.replace('fa-moon', 'fa-sun');
+        switchToVideoLayout();
     } else {
         themeIcon.classList.replace('fa-sun', 'fa-moon');
+        switchToOriginalLayout();
     }
 });
+
+// Function to switch to video layout (dark mode)
+function switchToVideoLayout() {
+    const heroSection = document.getElementById('home');
+    
+    // Create video hero layout
+    heroSection.innerHTML = `
+        <!-- Background Video -->
+        <div class="hero-video">
+            <video autoplay muted loop playsinline>
+                <source src="assets/AdobeStock_325825244.mov" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
+        <!-- Hero Content Overlay -->
+        <div class="hero-overlay"></div>
+        
+        <!-- Hero Text Overlay -->
+        <div class="hero-text-overlay">
+            <h1 class="hero-main-text">Ready to take you to the Cloud?</h1>
+        </div>
+    `;
+    
+    // Add video hero classes
+    heroSection.className = 'hero video-hero';
+}
+
+// Function to switch to original layout (light mode)
+function switchToOriginalLayout() {
+    const heroSection = document.getElementById('home');
+    
+    // Create original hero layout
+    heroSection.innerHTML = `
+        <div class="hero-content">
+            <h1>Hi, I'm <span class="highlight">Kareem</span></h1>
+            <h2 class="rotating-title">
+                <span class="title-text">Data Engineer</span>
+            </h2>
+            <p>I specialize in building scalable data pipelines, ETL systems, and cloud infrastructure using modern data engineering tools and AWS services.</p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="assets/Kareem-Rizk-Cloud-DevOps-Data-engineer.pdf" class="btn btn-resume" download>Download Resume</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/Kareem1990" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/kareem-rizk/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:kareem.magdy5@gmail.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    `;
+    
+    // Add original hero classes
+    heroSection.className = 'hero original-hero';
+}
 
 // Typewriter effect for hero section
 const titles = [
