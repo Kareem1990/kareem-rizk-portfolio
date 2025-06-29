@@ -150,6 +150,19 @@ function switchToOriginalLayout() {
     
     // Add original hero classes
     heroSection.className = 'hero original-hero';
+    
+    // Clear any existing typewriter timeout
+    if (typewriterTimeout) {
+        clearTimeout(typewriterTimeout);
+    }
+    
+    // Reset typewriter variables
+    currentTitleIndex = 0;
+    currentCharIndex = 0;
+    isDeleting = false;
+    
+    // Restart typewriter effect for light mode
+    setTimeout(typewriterEffect, 1000);
 }
 
 // Certifications Carousel Functionality
@@ -682,4 +695,133 @@ document.addEventListener('DOMContentLoaded', function() {
         rotatingSkillsElement.style.transition = 'opacity 0.3s ease-in-out';
         rotatingSkillsElement.style.opacity = '1';
     }
+});
+// Sticky Theme Toggle Button Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    const themeText = document.getElementById('theme-text');
+    
+    // Update button appearance based on current theme
+    function updateThemeButton() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        
+        if (currentTheme === 'dark') {
+            // In dark mode, show option to go to light
+            themeIcon.className = 'theme-icon fas fa-sun';
+            themeText.textContent = 'Experience Light';
+        } else {
+            // In light mode, show option to go to dark
+            themeIcon.className = 'theme-icon fas fa-moon';
+            themeText.textContent = 'Embrace the Void';
+        }
+    }
+    
+    // Smooth icon transition
+    function animateIconChange(newIconClass, newText) {
+        themeIcon.classList.add('rotate-out');
+        
+        setTimeout(() => {
+            themeIcon.className = newIconClass;
+            themeText.textContent = newText;
+            themeIcon.classList.remove('rotate-out');
+            themeIcon.classList.add('rotate-in');
+            
+            setTimeout(() => {
+                themeIcon.classList.remove('rotate-in');
+            }, 400);
+        }, 200);
+    }
+    
+    // Handle theme toggle
+    themeToggleBtn.addEventListener('click', function() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        
+        // Add pulse effect
+        themeToggleBtn.style.animation = 'themePulse 0.6s ease-out';
+        
+        if (currentTheme === 'dark') {
+            // Switch to light mode
+            animateIconChange('theme-icon fas fa-moon', 'Embrace the Void');
+            switchToOriginalLayout();
+            document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+            // Switch to dark mode
+            animateIconChange('theme-icon fas fa-sun', 'Experience Light');
+            switchToVideoLayout();
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        
+        // Remove pulse effect
+        setTimeout(() => {
+            themeToggleBtn.style.animation = '';
+        }, 600);
+        
+        // Save theme preference
+        localStorage.setItem('theme', document.documentElement.getAttribute('data-theme'));
+    });
+    
+    // Initialize button appearance
+    updateThemeButton();
+    
+    // Add subtle floating animation on page load
+    setTimeout(() => {
+        themeToggleBtn.style.animation = 'themePulse 2s ease-in-out';
+        setTimeout(() => {
+            themeToggleBtn.style.animation = '';
+        }, 2000);
+    }, 3000);
+});
+// Smooth Hero to Cloud Section Transition
+document.addEventListener('DOMContentLoaded', function() {
+    const heroSection = document.getElementById('home');
+    const cloudSection = document.getElementById('cloud-intro');
+    
+    function handleHeroCloudTransition() {
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const heroHeight = heroSection.offsetHeight;
+        
+        // Calculate transition progress (0 to 1)
+        const transitionStart = heroHeight * 0.3; // Start transition at 30% of hero height
+        const transitionEnd = heroHeight * 0.8;   // End transition at 80% of hero height
+        const progress = Math.max(0, Math.min(1, (scrollY - transitionStart) / (transitionEnd - transitionStart)));
+        
+        // Hero fade out
+        const heroOpacity = 1 - progress;
+        const heroTransform = progress * -30; // Move up slightly
+        heroSection.style.opacity = heroOpacity;
+        heroSection.style.transform = `translateY(${heroTransform}px)`;
+        
+        // Cloud section fade in
+        const cloudOpacity = progress;
+        const cloudTransform = (1 - progress) * 50; // Move up from below
+        cloudSection.style.opacity = cloudOpacity;
+        cloudSection.style.transform = `translateY(${cloudTransform}px)`;
+        
+        // Add/remove classes for additional styling
+        if (progress > 0.1) {
+            heroSection.classList.add('fade-out-scroll');
+            cloudSection.classList.add('fade-in-scroll');
+        } else {
+            heroSection.classList.remove('fade-out-scroll');
+            cloudSection.classList.remove('fade-in-scroll');
+        }
+    }
+    
+    // Throttle scroll events for better performance
+    let ticking = false;
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(handleHeroCloudTransition);
+            ticking = true;
+            setTimeout(() => { ticking = false; }, 16); // ~60fps
+        }
+    }
+    
+    // Listen for scroll events
+    window.addEventListener('scroll', requestTick);
+    
+    // Initial call
+    handleHeroCloudTransition();
 });

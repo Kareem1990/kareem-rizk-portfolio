@@ -162,6 +162,8 @@ p, li, span, div {
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
+    font-family: 'Orbitron', monospace;
+    letter-spacing: 0.5px;
     transition: all 0.3s ease;
     padding: 8px 16px;
     border-radius: 6px;
@@ -353,6 +355,9 @@ p, li, span, div {
 
 .hero.original-hero .hero-content h1 {
     font-size: 3.5rem;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    letter-spacing: 1px;
     margin-bottom: 1rem;
     animation: fadeInUp 1s ease;
     color: white;
@@ -608,10 +613,22 @@ html {
     object-fit: cover;
     object-position: center 0%; /* Show the very top of the image frame */
     opacity: 0;
-    animation: gradualImageFadeIn 4s ease-in-out 1s forwards;
+    animation: gradualImageFadeIn 4s ease-in-out 1s forwards, continuousZoom 8s ease-in-out infinite 5s;
     filter: grayscale(100%) brightness(0.9) contrast(1.2) sepia(0.3) hue-rotate(270deg) saturate(1.5);
     transition: filter 0.8s ease-in-out, transform 8s ease-in-out; /* MUCH LONGER - 8 seconds! */
     transform: scale(1); /* Start at normal size */
+}
+
+/* Slower, more subtle continuous zoom in/zoom out animation */
+@keyframes continuousZoom {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* Stop continuous zoom on hover but keep color change */
+[data-theme="dark"] .kareem-image:hover {
+    animation: gradualImageFadeIn 4s ease-in-out 1s forwards !important;
 }
 
 /* Much longer zoom out effect when user reaches Kareem section (dark mode only) */
@@ -854,25 +871,53 @@ html {
 }
 
 @media (max-width: 768px) {
+    /* Mobile: Text overlay on video */
+    .cloud-intro-container {
+        position: relative;
+        height: 100vh;
+    }
+    
+    .cloud-video-side {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+    
     .cloud-text-side {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
         padding: 2rem 1.5rem;
     }
     
+    .cloud-text-content {
+        text-align: center;
+        color: white;
+    }
+    
     .cloud-intro-text {
-        font-size: 1.3rem; /* Increased from 1.1rem */
+        font-size: 1.3rem;
+        color: white;
     }
     
     .cloud-emphasis {
-        font-size: 1.4rem; /* Increased from 1.2rem */
+        font-size: 1.4rem;
+        color: white;
     }
     
     .cloud-signature {
         font-size: 1.1rem;
-    }
-    
-    .cloud-video-side {
-        height: 40vh;
-        min-height: 300px;
+        color: white;
     }
     
     .cloud-scroll-hint {
@@ -908,6 +953,87 @@ html {
 }
 
 @media (max-width: 768px) {
+    /* Mobile: Text overlay on Kareem image */
+    .kareem-profile-container {
+        position: relative;
+        height: 100vh;
+    }
+    
+    .kareem-image-side {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+    
+    .kareem-text-side {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1.5rem;
+    }
+    
+    .kareem-text-content {
+        text-align: center;
+        color: white;
+        max-width: 90%;
+    }
+    
+    .kareem-rotating-text {
+        color: white;
+        font-size: 1.4rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .kareem-intro-text {
+        color: white;
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+    }
+    
+    .kareem-emphasis {
+        color: white;
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+    }
+    
+    .kareem-closing {
+        color: white;
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        font-style: italic;
+    }
+    
+    .kareem-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+    }
+    
+    .kareem-buttons .btn {
+        width: 80%;
+        max-width: 250px;
+        text-align: center;
+        padding: 12px 20px;
+    }
+    
+    .rotating-skills {
+        color: #ba68c8;
+        font-weight: bold;
+    }
+    
     .kareem-text-side {
         padding: 2rem 1.5rem;
     }
@@ -1149,6 +1275,9 @@ html {
 /* Rotating Title Animation */
 .rotating-title {
     font-size: 1.8rem;
+    font-family: 'Orbitron', monospace;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     margin-bottom: 1rem;
     opacity: 0.9;
     animation: fadeInUp 1s ease 0.2s both;
@@ -1159,7 +1288,9 @@ html {
 }
 
 .title-text {
-    font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+    font-family: 'Orbitron', monospace;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     background: linear-gradient(45deg, #2d0a3d, #4a1458, #3d1a4f, #2a0845);
     background-size: 300% 300%;
     -webkit-background-clip: text;
@@ -1311,7 +1442,7 @@ html {
     text-align: center;
     max-width: 600px;
     width: 100%;
-    height: 500px;
+    height: 550px; /* Increased from 500px to 550px */
     position: relative;
 }
 
@@ -1319,7 +1450,7 @@ html {
     position: relative;
     width: 280px;
     height: 280px;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem; /* Increased from 3rem to 4rem */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1439,6 +1570,9 @@ html {
 .section-title {
     text-align: center;
     font-size: 2.5rem;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    letter-spacing: 1px;
     margin-bottom: 3rem;
     color: var(--text-color);
     position: relative;
@@ -1765,7 +1899,7 @@ html {
     }
     
     .certification-display {
-        height: 350px;
+        height: 400px; /* Increased from 350px to 400px */
     }
     
     .carousel-btn {
@@ -1783,6 +1917,7 @@ html {
     .certification-badge {
         width: 220px;
         height: 220px;
+        margin-bottom: 3rem; /* Increased from default to 3rem for mobile */
     }
     
     .cert-image {
@@ -1833,6 +1968,12 @@ html {
     .tech-list li {
         font-size: 1rem;
         padding: 0.7rem 0;
+        padding-left: 1.8rem; /* Increased from default to prevent arrow overlap */
+    }
+    
+    .tech-list li:before {
+        left: 0.3rem; /* Position arrow away from text */
+        top: 0.8rem; /* Adjust vertical position */
     }
 }
 
@@ -1886,12 +2027,13 @@ html {
     .tech-list li {
         font-size: 0.95rem;
         padding: 0.6rem 0;
-        padding-left: 1.2rem;
+        padding-left: 1.5rem; /* Increased from 1.2rem to give more space for arrow */
     }
     
     .tech-list li:before {
         font-size: 0.7rem;
         top: 0.7rem;
+        left: 0.3rem; /* Move arrow slightly to the right */
     }
 }
 
@@ -2210,7 +2352,13 @@ html {
     }
 }
 
-/* Using the same cleanPurpleGlow animation from hero.original-hero */
+/* Dark mode responsive - medium screens */
+@media (max-width: 900px) {
+    [data-theme="dark"] .hero.video-hero .hero-main-text {
+        font-size: 3.5rem;
+        letter-spacing: 1.5px;
+    }
+}
 
 @keyframes fadeIn {
     from {
@@ -2331,6 +2479,13 @@ html {
         font-size: 3rem;
         white-space: normal;
     }
+    
+    /* Dark mode responsive - tablet */
+    [data-theme="dark"] .hero.video-hero .hero-main-text {
+        font-size: 3rem;
+        white-space: normal;
+        letter-spacing: 1px;
+    }
 
     .intro-content h1 {
         font-size: 2.5rem;
@@ -2385,6 +2540,14 @@ html {
         font-size: 2rem;
         white-space: normal;
     }
+    
+    /* Dark mode responsive - mobile */
+    [data-theme="dark"] .hero.video-hero .hero-main-text {
+        font-size: 2rem;
+        white-space: normal;
+        letter-spacing: 0.5px;
+        line-height: 1.1;
+    }
 
     .intro-content h1 {
         font-size: 2rem;
@@ -2396,5 +2559,342 @@ html {
 
     .section-title {
         font-size: 2rem;
+    }
+}
+
+/* Cool Logo Styling */
+.logo-link {
+    text-decoration: none;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.logo-text {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.8rem;
+    font-weight: 900;
+    display: flex;
+    gap: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-letter {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.logo-letter:hover {
+    transform: translateY(-3px) scale(1.1);
+    filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+}
+
+.logo-letter:nth-child(1) {
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+.logo-letter:nth-child(2) {
+    animation: logoFloat 3s ease-in-out infinite 0.5s;
+}
+
+.logo-subtitle {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--text-color);
+    opacity: 0.7;
+    margin-top: -2px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    text-align: center;
+}
+
+/* Dark mode logo styling with color changing animation */
+[data-theme="dark"] .logo-letter {
+    background: linear-gradient(45deg, #6a1b9a, #8e44ad, #5d4e75, #7b68ee, #ba68c8);
+    background-size: 500% 500%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: logoFloat 3s ease-in-out infinite, logoColorChange 2s ease-in-out infinite;
+}
+
+[data-theme="dark"] .logo-subtitle {
+    background: linear-gradient(45deg, #6a1b9a, #8e44ad, #5d4e75, #7b68ee, #ba68c8);
+    background-size: 500% 500%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: logoColorChange 2s ease-in-out infinite 0.5s;
+}
+
+/* Fast color changing animation for logo */
+@keyframes logoColorChange {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 25% 50%; }
+    50% { background-position: 50% 50%; }
+    75% { background-position: 75% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* Logo hover effects */
+.logo-link:hover .logo-text {
+    transform: scale(1.05);
+}
+
+.logo-link:hover .logo-subtitle {
+    opacity: 1;
+    color: #667eea;
+    transform: translateY(-1px);
+}
+
+[data-theme="dark"] .logo-link:hover .logo-subtitle {
+    background: linear-gradient(45deg, #ba68c8, #667eea, #8e44ad);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: logoColorChange 1.5s ease-in-out infinite;
+}
+
+/* Logo animations */
+@keyframes logoFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-2px);
+    }
+}
+
+@keyframes logoGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.3));
+    }
+    50% {
+        filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.6));
+    }
+}
+
+/* Logo pulse effect on page load */
+.logo-container {
+    animation: logoPulse 2s ease-out 1s;
+}
+
+@keyframes logoPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Mobile logo adjustments */
+@media (max-width: 768px) {
+    .logo-text {
+        font-size: 1.5rem;
+    }
+    
+    .logo-subtitle {
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-text {
+        font-size: 1.3rem;
+    }
+    
+    .logo-subtitle {
+        font-size: 0.55rem;
+        margin-left: 1px;
+    }
+}
+.hero {
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.cloud-intro-section {
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.cloud-intro-section.fade-in-scroll {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero.fade-out-scroll {
+    opacity: 0;
+    transform: translateY(-30px);
+}
+.theme-toggle-sticky {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    animation: floatIn 1s ease-out 2s both;
+}
+
+.theme-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 50px;
+    padding: 15px 25px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 160px;
+    justify-content: center;
+}
+
+.theme-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.theme-btn:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+.theme-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.theme-icon {
+    font-size: 14px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-text {
+    font-family: 'Orbitron', monospace;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+/* Dark mode button styling */
+[data-theme="dark"] .theme-btn {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    box-shadow: 0 8px 25px rgba(15, 52, 96, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .theme-btn:hover {
+    background: linear-gradient(135deg, #0f3460 0%, #16213e 50%, #1a1a2e 100%);
+    box-shadow: 0 12px 35px rgba(15, 52, 96, 0.6);
+}
+
+[data-theme="dark"] .theme-icon-container {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Icon rotation animations */
+.theme-icon.rotate-out {
+    transform: rotateY(90deg) scale(0.8);
+    opacity: 0;
+}
+
+.theme-icon.rotate-in {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+}
+
+/* Float in animation */
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(100px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Pulse effect for attention */
+@keyframes themePulse {
+    0%, 100% {
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+    50% {
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.8), 0 0 0 10px rgba(102, 126, 234, 0.1);
+    }
+}
+
+[data-theme="dark"] @keyframes themePulse {
+    0%, 100% {
+        box-shadow: 0 8px 25px rgba(15, 52, 96, 0.4);
+    }
+    50% {
+        box-shadow: 0 8px 25px rgba(15, 52, 96, 0.8), 0 0 0 10px rgba(15, 52, 96, 0.1);
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .theme-toggle-sticky {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .theme-btn {
+        padding: 12px 20px;
+        min-width: 140px;
+        font-size: 0.85rem;
+    }
+    
+    .theme-text {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .theme-btn {
+        padding: 10px 16px;
+        min-width: 120px;
+        font-size: 0.8rem;
+    }
+    
+    .theme-icon-container {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .theme-icon {
+        font-size: 12px;
     }
 }
