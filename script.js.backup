@@ -430,18 +430,9 @@ function createArticleCard(article) {
 
 // Load articles into the grid
 function loadArticles() {
-    console.log('Loading articles...', articles); // Debug log
     const articlesGrid = document.getElementById('articles-grid');
-    if (articlesGrid) {
-        if (articles && articles.length > 0) {
-            articlesGrid.innerHTML = articles.map(article => createArticleCard(article)).join('');
-            console.log('Articles loaded successfully');
-        } else {
-            console.log('No articles found');
-            articlesGrid.innerHTML = '<p>No articles available at the moment.</p>';
-        }
-    } else {
-        console.log('Articles grid element not found');
+    if (articlesGrid && articles.length > 0) {
+        articlesGrid.innerHTML = articles.map(article => createArticleCard(article)).join('');
     }
 }
 
@@ -476,18 +467,9 @@ function createProjectCard(project) {
 
 // Load projects into the grid
 function loadProjects() {
-    console.log('Loading projects...', projects); // Debug log
     const projectsGrid = document.getElementById('projects-grid');
     if (projectsGrid) {
-        if (projects && projects.length > 0) {
-            projectsGrid.innerHTML = projects.map(project => createProjectCard(project)).join('');
-            console.log('Projects loaded successfully');
-        } else {
-            console.log('No projects found');
-            projectsGrid.innerHTML = '<p>No projects available at the moment.</p>';
-        }
-    } else {
-        console.log('Projects grid element not found');
+        projectsGrid.innerHTML = projects.map(project => createProjectCard(project)).join('');
     }
 }
 

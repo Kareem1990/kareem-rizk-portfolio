@@ -369,6 +369,191 @@ p, li, span, div {
     color: #ffd700;
 }
 
+/* Smooth Apple-style section transitions */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Hero section - clean without overlays */
+.hero {
+    scroll-snap-align: start;
+    position: relative;
+}
+
+/* Cloud Introduction Section */
+.cloud-intro-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: var(--bg-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.cloud-intro-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* Left Side - Video */
+.cloud-video-side {
+    flex: 1;
+    position: relative;
+    background: #000;
+    overflow: hidden;
+}
+
+.cloud-video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+}
+
+.cloud-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: gradualVideoFadeIn 4s ease-in-out 1s forwards;
+    filter: brightness(0.8) contrast(1.1);
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 70%, transparent 100%);
+    z-index: 1;
+}
+
+/* Right Side - Text Content */
+.cloud-text-side {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    background: var(--bg-color);
+    position: relative;
+    z-index: 2;
+}
+
+/* Dark mode fade transition */
+[data-theme="dark"] .cloud-text-side::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(to right, transparent 0%, var(--bg-color) 100%);
+    z-index: -1;
+}
+
+.cloud-text-content {
+    max-width: 500px;
+    animation: fadeInUp 1s ease-out 1s both;
+}
+
+.cloud-intro-text {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+.cloud-emphasis {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+.cloud-signature {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    font-weight: 400;
+}
+
+.highlight-name {
+    color: #8e44ad;
+    font-weight: 600;
+}
+
+/* Enhanced gradual video fade-in animation */
+@keyframes gradualVideoFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+    30% {
+        opacity: 0.2;
+        transform: scale(1.03);
+    }
+    60% {
+        opacity: 0.6;
+        transform: scale(1.01);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Responsive Design for Cloud Intro */
+@media (max-width: 1024px) {
+    .cloud-intro-container {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .cloud-video-side {
+        height: 50vh;
+        min-height: 400px;
+    }
+    
+    .cloud-text-side {
+        padding: 3rem 2rem;
+        min-height: 50vh;
+    }
+    
+    [data-theme="dark"] .cloud-text-side::before {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .cloud-text-side {
+        padding: 2rem 1.5rem;
+    }
+    
+    .cloud-intro-text {
+        font-size: 1.1rem;
+    }
+    
+    .cloud-emphasis {
+        font-size: 1.2rem;
+    }
+    
+    .cloud-signature {
+        font-size: 1.1rem;
+    }
+    
+    .cloud-video-side {
+        height: 40vh;
+        min-height: 300px;
+    }
+}
+
 /* Cloud Video Section */
 .cloud-video-section {
     min-height: 100vh;
@@ -990,6 +1175,8 @@ p, li, span, div {
 .projects {
     padding: 100px 0;
     background-color: var(--secondary-bg);
+    opacity: 1;
+    visibility: visible;
 }
 
 .technologies-section .container {
@@ -1000,8 +1187,8 @@ p, li, span, div {
 
 /* Fade-in animations */
 .fade-in {
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1; /* Changed from 0 to 1 to make elements visible by default */
+    transform: translateY(0); /* Changed from translateY(30px) to 0 */
     transition: all 0.8s ease-out;
 }
 
@@ -1011,7 +1198,17 @@ p, li, span, div {
 }
 
 /* Override for technologies section to ensure it's always visible */
-.technologies-section.fade-in {
+.technologies-section .fade-in {
+    opacity: 1;
+    transform: none;
+}
+
+.technologies-section .fade-in-delay-1 {
+    opacity: 1;
+    transform: none;
+}
+
+.technologies-section .fade-in-delay-2 {
     opacity: 1;
     transform: none;
 }
@@ -1337,6 +1534,8 @@ p, li, span, div {
 .articles {
     padding: 100px 0;
     background-color: var(--bg-color);
+    opacity: 1;
+    visibility: visible;
 }
 
 .articles-grid {
