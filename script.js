@@ -1,0 +1,368 @@
+// Typewriter effect for hero section
+const titles = [
+    "Data Engineer",
+    "Cloud Engineer", 
+    "DevOps Engineer",
+    "Tech Savvy",
+    "Full-stack Web Developer",
+    "Tech Journalist",
+    "Content Creator",
+    "Storyteller",
+    "Writer"
+];
+
+let currentTitleIndex = 0;
+let currentCharIndex = 0;
+let isDeleting = false;
+let typewriterTimeout;
+
+function typewriterEffect() {
+    const titleElement = document.querySelector('.title-text');
+    if (!titleElement) return;
+    
+    const currentTitle = titles[currentTitleIndex];
+    
+    if (isDeleting) {
+        // Backspace effect
+        titleElement.textContent = currentTitle.substring(0, currentCharIndex - 1);
+        currentCharIndex--;
+        
+        if (currentCharIndex === 0) {
+            isDeleting = false;
+            currentTitleIndex = (currentTitleIndex + 1) % titles.length;
+            typewriterTimeout = setTimeout(typewriterEffect, 200); // Short pause before typing next
+        } else {
+            typewriterTimeout = setTimeout(typewriterEffect, 50); // Backspace speed
+        }
+    } else {
+        // Typing effect
+        titleElement.textContent = currentTitle.substring(0, currentCharIndex + 1);
+        currentCharIndex++;
+        
+        if (currentCharIndex === currentTitle.length) {
+            // Finished typing, pause then start deleting
+            typewriterTimeout = setTimeout(() => {
+                isDeleting = true;
+                typewriterEffect();
+            }, 1500); // Pause for 1.5 seconds
+        } else {
+            typewriterTimeout = setTimeout(typewriterEffect, 100); // Typing speed
+        }
+    }
+}
+
+// Start typewriter effect
+setTimeout(typewriterEffect, 1000); // Initial delay
+
+// Mobile Navigation Toggle
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
+
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+});
+
+// Close mobile menu when clicking on a link
+document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navMenu.classList.remove('active');
+}));
+
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Project data will be loaded from config.js
+// This is a fallback if config.js is not available
+const fallbackProjects = [
+    {
+        title: "E-Commerce Platform",
+        description: "A full-stack e-commerce application built with React, Node.js, and MongoDB. Features include user authentication, payment processing, and admin dashboard.",
+        technologies: ["React", "Node.js", "MongoDB", "Stripe", "JWT"],
+        githubUrl: "https://github.com/yourusername/ecommerce-platform",
+        liveUrl: "https://your-ecommerce-demo.com",
+        icon: "🛒"
+    },
+    {
+        title: "Task Management App",
+        description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
+        technologies: ["Vue.js", "Express", "Socket.io", "PostgreSQL"],
+        githubUrl: "https://github.com/yourusername/task-manager",
+        liveUrl: "https://your-task-app.com",
+        icon: "📋"
+    },
+    {
+        title: "Weather Dashboard",
+        description: "A responsive weather application that provides current conditions and forecasts using multiple weather APIs with beautiful data visualizations.",
+        technologies: ["JavaScript", "Chart.js", "Weather API", "CSS3"],
+        githubUrl: "https://github.com/yourusername/weather-dashboard",
+        liveUrl: "https://your-weather-app.com",
+        icon: "🌤️"
+    },
+    {
+        title: "Social Media Analytics",
+        description: "A data analytics platform for social media metrics with interactive dashboards, automated reporting, and trend analysis.",
+        technologies: ["Python", "Django", "D3.js", "Redis", "Celery"],
+        githubUrl: "https://github.com/yourusername/social-analytics",
+        liveUrl: "https://your-analytics-demo.com",
+        icon: "📊"
+    },
+    {
+        title: "Recipe Finder App",
+        description: "A mobile-first recipe application with ingredient-based search, meal planning, and shopping list generation features.",
+        technologies: ["React Native", "Firebase", "Recipe API", "Redux"],
+        githubUrl: "https://github.com/yourusername/recipe-finder",
+        liveUrl: "https://your-recipe-app.com",
+        icon: "🍳"
+    },
+    {
+        title: "Portfolio Website",
+        description: "A responsive portfolio website showcasing projects and skills with modern design, smooth animations, and contact functionality.",
+        technologies: ["HTML5", "CSS3", "JavaScript", "GSAP"],
+        githubUrl: "https://github.com/yourusername/portfolio-site",
+        liveUrl: "https://your-portfolio.com",
+        icon: "💼"
+    },
+    {
+        title: "Chat Application",
+        description: "A real-time chat application with multiple rooms, file sharing, emoji support, and user presence indicators.",
+        technologies: ["React", "Socket.io", "Node.js", "MongoDB"],
+        githubUrl: "https://github.com/yourusername/chat-app",
+        liveUrl: "https://your-chat-app.com",
+        icon: "💬"
+    },
+    {
+        title: "API Gateway Service",
+        description: "A microservices API gateway with authentication, rate limiting, and request routing capabilities.",
+        technologies: ["Node.js", "Express", "Redis", "JWT", "Docker"],
+        githubUrl: "https://github.com/yourusername/api-gateway",
+        liveUrl: null,
+        icon: "⚡"
+    }
+];
+
+// Get projects from config or use fallback
+const projects = (typeof portfolioConfig !== 'undefined' && portfolioConfig.projects) 
+    ? portfolioConfig.projects 
+    : fallbackProjects;
+
+// Get articles from config
+const articles = (typeof portfolioConfig !== 'undefined' && portfolioConfig.articles) 
+    ? portfolioConfig.articles 
+    : [];
+
+// Function to create article cards
+function createArticleCard(article) {
+    const isExternal = article.link.startsWith('http');
+    const linkText = isExternal ? 'Read Article' : 'View PDF';
+    const linkClass = isExternal ? 'article-link' : 'article-link pdf';
+    const categoryClass = article.category === 'forbes' ? 'forbes' : 'academic';
+    const categoryText = article.category === 'forbes' ? 'Forbes' : 'UMGC';
+    
+    return `
+        <div class="article-card">
+            <div class="article-thumbnail">
+                <img src="${article.thumbnail}" alt="${article.title}" loading="lazy">
+                <div class="article-category ${categoryClass}">${categoryText}</div>
+            </div>
+            <div class="article-content">
+                <div class="article-type">${article.type}</div>
+                <h3 class="article-title">${article.title}</h3>
+                <div class="article-publication">${article.publication}</div>
+                <a href="${article.link}" target="_blank" class="${linkClass}">
+                    <i class="fas ${isExternal ? 'fa-external-link-alt' : 'fa-file-pdf'}"></i> ${linkText}
+                </a>
+            </div>
+        </div>
+    `;
+}
+
+// Load articles into the grid
+function loadArticles() {
+    const articlesGrid = document.getElementById('articles-grid');
+    if (articlesGrid && articles.length > 0) {
+        articlesGrid.innerHTML = articles.map(article => createArticleCard(article)).join('');
+    }
+}
+
+// Function to create project cards
+function createProjectCard(project) {
+    return `
+        <div class="project-card">
+            <div class="project-image">
+                ${project.thumbnail ? 
+                    `<img src="${project.thumbnail}" alt="${project.title}" loading="lazy">` :
+                    `<span>${project.icon}</span>`
+                }
+            </div>
+            <div class="project-content">
+                <h3 class="project-title">${project.title}</h3>
+                <p class="project-description">${project.description}</p>
+                <div class="project-tech">
+                    ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                </div>
+                <div class="project-links">
+                    <a href="${project.githubUrl}" target="_blank" class="project-link">
+                        <i class="fab fa-github"></i> Code
+                    </a>
+                    ${project.liveUrl ? `<a href="${project.liveUrl}" target="_blank" class="project-link">
+                        <i class="fas fa-external-link-alt"></i> Live Demo
+                    </a>` : ''}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Load projects into the grid
+function loadProjects() {
+    const projectsGrid = document.getElementById('projects-grid');
+    if (projectsGrid) {
+        projectsGrid.innerHTML = projects.map(project => createProjectCard(project)).join('');
+    }
+}
+
+// EmailJS Configuration
+(function() {
+    // Initialize EmailJS with your public key
+    emailjs.init("pagdokbzUI30JEaOV");
+})();
+
+// Contact form handling with EmailJS
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Show loading state
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        
+        // Get form data
+        const formData = new FormData(this);
+        const templateParams = {
+            from_name: formData.get('name'),
+            from_email: formData.get('email'),
+            message: formData.get('message'),
+            to_email: 'kareem.magdy5@gmail.com'
+        };
+        
+        // Send email using EmailJS with your actual credentials
+        emailjs.send('service_w4bo21i', 'template_ls201bu', templateParams)
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                alert(`Thank you ${templateParams.from_name}! Your message has been sent successfully. I'll get back to you soon.`);
+                contactForm.reset();
+            })
+            .catch(function(error) {
+                console.log('FAILED...', error);
+                alert('Sorry, there was an error sending your message. Please try again or contact me directly at kareem.magdy5@gmail.com');
+            })
+            .finally(function() {
+                // Reset button state
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+    });
+}
+
+// Navbar background change on scroll
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 100) {
+        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+    } else {
+        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+    }
+});
+
+// Intersection Observer for animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    loadProjects();
+    loadArticles();
+    
+    // Initialize fade-in animations
+    initFadeInAnimations();
+    
+    // Observe elements for animations
+    const animateElements = document.querySelectorAll('.project-card, .article-card, .about-content, .contact-content, .education-item');
+    animateElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+});
+
+// Fade-in animations on scroll for Technologies section
+function initFadeInAnimations() {
+    const fadeElements = document.querySelectorAll('.fade-in');
+    
+    const fadeObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    fadeElements.forEach(element => {
+        fadeObserver.observe(element);
+    });
+}
+
+// Add some interactive effects
+document.addEventListener('mousemove', (e) => {
+    const cursor = document.querySelector('.cursor');
+    if (cursor) {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    }
+});
+
+// Typing effect for hero section (optional enhancement)
+function typeWriter(element, text, speed = 100) {
+    let i = 0;
+    element.innerHTML = '';
+    
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
+    }
+    
+    type();
+}

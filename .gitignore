@@ -1,0 +1,26 @@
+
+# Q CLI Configuration
+.q/
+# AI Assistant and Development Privacy
+.amazon-q/
+q-chat-history/
+ai-conversations/
+chat-logs/
+assistant-cache/
+.claude/
+.chatgpt/
+.copilot/
+
+# Development Notes and AI Interactions
+ai-notes.txt
+q-session.log
+assistant-help.md
+development-log.txt
+ai-prompts.md
+chat-transcript.txt
+
+# Personal Development Files
+personal-notes/
+dev-diary.txt
+learning-notes.md
+project-ideas.txt
