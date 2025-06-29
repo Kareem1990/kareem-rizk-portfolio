@@ -89,6 +89,84 @@ function switchToOriginalLayout() {
     heroSection.className = 'hero original-hero';
 }
 
+// Certifications Carousel Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const certifications = [
+        {
+            id: 'aws',
+            title: 'AWS Certified Developer – Associate',
+            description: 'Validates expertise in developing, deploying, and debugging cloud-based applications using AWS services.'
+        },
+        {
+            id: 'ibm',
+            title: 'IBM Data Engineering Professional Certificate',
+            description: 'Comprehensive program covering data engineering fundamentals, ETL processes, and big data technologies.'
+        },
+        {
+            id: 'udacity',
+            title: 'Udacity Data Engineering Nanodegree Certificate',
+            description: 'Advanced program focusing on data modeling, data warehousing, and data pipeline orchestration.'
+        }
+    ];
+
+    let currentCertIndex = 0;
+    
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const certTitle = document.getElementById('certTitle');
+    const certDescription = document.getElementById('certDescription');
+    const certImages = document.querySelectorAll('.cert-image');
+    const indicators = document.querySelectorAll('.indicator');
+
+    function updateCertification(index) {
+        // Fade out current image first
+        certImages.forEach(img => {
+            img.classList.remove('active');
+        });
+
+        // Small delay then fade in new image
+        setTimeout(() => {
+            certImages[index].classList.add('active');
+        }, 150);
+
+        // Update indicators immediately
+        indicators.forEach((indicator, i) => {
+            indicator.classList.toggle('active', i === index);
+        });
+
+        // Update text content with slight delay for smoother transition
+        setTimeout(() => {
+            certTitle.textContent = certifications[index].title;
+            certDescription.textContent = certifications[index].description;
+        }, 100);
+    }
+
+    function nextCertification() {
+        currentCertIndex = (currentCertIndex + 1) % certifications.length;
+        updateCertification(currentCertIndex);
+    }
+
+    function prevCertification() {
+        currentCertIndex = (currentCertIndex - 1 + certifications.length) % certifications.length;
+        updateCertification(currentCertIndex);
+    }
+
+    // Event listeners
+    nextBtn.addEventListener('click', nextCertification);
+    prevBtn.addEventListener('click', prevCertification);
+
+    // Indicator click events
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            currentCertIndex = index;
+            updateCertification(currentCertIndex);
+        });
+    });
+
+    // Auto-advance every 5 seconds
+    setInterval(nextCertification, 5000);
+});
+
 // Typewriter effect for hero section
 const titles = [
     "Data Engineer",
