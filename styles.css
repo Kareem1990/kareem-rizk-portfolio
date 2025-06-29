@@ -397,12 +397,26 @@ html {
     position: relative;
 }
 
-/* Left Side - Video */
+/* Left Side - Video - Exact dimensions */
 .cloud-video-side {
-    flex: 1;
+    flex: 0 0 50%; /* Exact 50% width */
     position: relative;
     background: #000;
     overflow: hidden;
+    height: 100vh; /* Exact height match */
+}
+
+/* Right Side - Text Content - Exact dimensions */
+.cloud-text-side {
+    flex: 0 0 50%; /* Exact 50% width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    background: var(--bg-color);
+    position: relative;
+    z-index: 2;
+    height: 100vh; /* Exact height match */
 }
 
 .cloud-video-wrapper {
@@ -429,18 +443,6 @@ html {
     height: 100%;
     background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 70%, transparent 100%);
     z-index: 1;
-}
-
-/* Right Side - Text Content */
-.cloud-text-side {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem;
-    background: var(--bg-color);
-    position: relative;
-    z-index: 2;
 }
 
 /* Dark mode fade transition */
@@ -508,6 +510,204 @@ html {
     }
 }
 
+/* Dark Mode Only - Kareem Profile Section */
+.kareem-profile-section {
+    min-height: 100vh;
+    display: none; /* Hidden by default */
+    align-items: center;
+    background: var(--bg-color);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Show only in dark mode */
+[data-theme="dark"] .kareem-profile-section {
+    display: flex;
+}
+
+.kareem-profile-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* Left Side - Text Content - Exact dimensions to match cloud text */
+.kareem-text-side {
+    flex: 0 0 50%; /* Exact 50% width to match cloud text */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    background: var(--bg-color);
+    position: relative;
+    z-index: 2;
+    height: 100vh; /* Exact height match */
+}
+
+/* Right Side - Image - Exact dimensions to match cloud video */
+.kareem-image-side {
+    flex: 0 0 50%; /* Exact 50% width to match cloud video */
+    position: relative;
+    background: #000;
+    overflow: hidden;
+    height: 100vh; /* Exact height match */
+}
+
+.kareem-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+}
+
+/* Hover effect on the wrapper to ensure it works */
+.kareem-image-wrapper:hover .kareem-image {
+    filter: grayscale(0%) brightness(1) contrast(1);
+}
+
+.kareem-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: gradualImageFadeIn 4s ease-in-out 1s forwards;
+    filter: grayscale(100%) brightness(0.7) contrast(1.2);
+    transition: filter 0.5s ease-in-out;
+}
+
+/* Direct hover effect as backup */
+.kareem-image:hover {
+    filter: grayscale(0%) brightness(1) contrast(1);
+}
+
+.kareem-image-side .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 70%, transparent 100%);
+    z-index: 1;
+    pointer-events: none; /* Allow hover to pass through overlay */
+}
+
+/* Dark mode fade transition */
+[data-theme="dark"] .kareem-text-side::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(to left, transparent 0%, var(--bg-color) 100%);
+    z-index: -1;
+}
+
+.kareem-text-content {
+    max-width: 500px;
+    animation: fadeInUp 1s ease-out 1s both;
+}
+
+.kareem-intro-text {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+.kareem-emphasis {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+.kareem-signature {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    font-weight: 400;
+}
+
+/* Dark Mode Only - Switch About and Technologies sections order */
+[data-theme="dark"] .about {
+    order: 2; /* Move About section after Technologies in dark mode */
+}
+
+[data-theme="dark"] .technologies-section {
+    order: 1; /* Move Technologies section before About in dark mode */
+}
+
+/* Ensure the parent body uses flexbox for ordering to work */
+[data-theme="dark"] body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Make sure other sections maintain their normal order */
+[data-theme="dark"] .navbar {
+    order: -10;
+}
+
+[data-theme="dark"] .hero {
+    order: -9;
+}
+
+[data-theme="dark"] .cloud-intro-section {
+    order: -8;
+}
+
+[data-theme="dark"] .kareem-profile-section {
+    order: -7;
+}
+
+[data-theme="dark"] .education {
+    order: 3;
+}
+
+[data-theme="dark"] .certifications {
+    order: 4; /* Place certifications right after education */
+}
+
+[data-theme="dark"] .projects {
+    order: 5; /* Move projects down */
+}
+
+[data-theme="dark"] .articles {
+    order: 6; /* Move articles down */
+}
+
+[data-theme="dark"] .contact {
+    order: 7; /* Move contact down */
+}
+
+[data-theme="dark"] footer {
+    order: 8; /* Move footer down */
+}
+
+/* Enhanced gradual image fade-in animation */
+@keyframes gradualImageFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+    30% {
+        opacity: 0.2;
+        transform: scale(1.03);
+    }
+    60% {
+        opacity: 0.6;
+        transform: scale(1.01);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 /* Responsive Design for Cloud Intro */
 @media (max-width: 1024px) {
     .cloud-intro-container {
@@ -549,6 +749,52 @@ html {
     }
     
     .cloud-video-side {
+        height: 40vh;
+        min-height: 300px;
+    }
+}
+
+/* Responsive Design for Kareem Profile Section */
+@media (max-width: 1024px) {
+    .kareem-profile-container {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .kareem-image-side {
+        height: 50vh;
+        min-height: 400px;
+    }
+    
+    .kareem-text-side {
+        padding: 3rem 2rem;
+        min-height: 50vh;
+    }
+    
+    [data-theme="dark"] .kareem-text-side::before {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .kareem-text-side {
+        padding: 2rem 1.5rem;
+    }
+    
+    .kareem-intro-text {
+        font-size: 1.1rem;
+    }
+    
+    .kareem-emphasis {
+        font-size: 1.2rem;
+    }
+    
+    .kareem-signature {
+        font-size: 1.1rem;
+    }
+    
+    .kareem-image-side {
         height: 40vh;
         min-height: 300px;
     }
