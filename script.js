@@ -825,3 +825,70 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial call
     handleHeroCloudTransition();
 });
+// Clean Skills Progress Bar Animation - No Hover Effects
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Initialize skills progress bars with scroll animation
+    function initSkillsProgress() {
+        const skillItems = document.querySelectorAll('.skill-item');
+        
+        const skillsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const skillItem = entry.target;
+                    const progressBar = skillItem.querySelector('.skill-progress');
+                    const percentage = skillItem.getAttribute('data-level');
+                    
+                    // Animate progress bar
+                    setTimeout(() => {
+                        progressBar.style.width = percentage + '%';
+                        
+                        // Animate percentage counter
+                        animateCounter(skillItem, percentage);
+                    }, 200);
+                    
+                    // Unobserve after animation
+                    skillsObserver.unobserve(skillItem);
+                }
+            });
+        }, {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        });
+        
+        skillItems.forEach(item => {
+            skillsObserver.observe(item);
+        });
+    }
+    
+    // Animate percentage counter
+    function animateCounter(skillItem, targetPercentage) {
+        const percentageElement = skillItem.querySelector('.skill-percentage');
+        const startValue = 0;
+        const endValue = parseInt(targetPercentage);
+        const duration = 2000; // 2 seconds
+        const startTime = performance.now();
+        
+        function updateCounter(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Easing function for smooth animation
+            const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+            const currentValue = Math.floor(startValue + (endValue - startValue) * easeOutCubic);
+            
+            percentageElement.textContent = currentValue + '%';
+            
+            if (progress < 1) {
+                requestAnimationFrame(updateCounter);
+            } else {
+                percentageElement.textContent = endValue + '%';
+            }
+        }
+        
+        requestAnimationFrame(updateCounter);
+    }
+    
+    // Initialize skills progress bars
+    initSkillsProgress();
+});
