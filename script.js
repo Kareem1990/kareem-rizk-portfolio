@@ -1,4 +1,50 @@
+// Mobile Scroll Lock - Prevent Horizontal Scrolling
+document.addEventListener('DOMContentLoaded', function() {
+    // Prevent horizontal scrolling on mobile devices
+    function preventHorizontalScroll() {
+        // Lock horizontal scroll position
+        let scrollLeft = 0;
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollX !== scrollLeft) {
+                window.scrollTo(scrollLeft, window.scrollY);
+            }
+        });
+        
+        // Prevent horizontal touch scrolling
+        document.addEventListener('touchstart', function(e) {
+            // Store initial touch position
+            this.startX = e.touches[0].clientX;
+            this.startY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', function(e) {
+            if (!this.startX || !this.startY) return;
+            
+            let diffX = Math.abs(e.touches[0].clientX - this.startX);
+            let diffY = Math.abs(e.touches[0].clientY - this.startY);
+            
+            // If horizontal movement is greater than vertical, prevent default
+            if (diffX > diffY && diffX > 10) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        // Reset touch tracking
+        document.addEventListener('touchend', function() {
+            this.startX = null;
+            this.startY = null;
+        });
+    }
+    
+    // Apply mobile scroll lock on touch devices
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        preventHorizontalScroll();
+    }
+});
+
 // Theme Toggle Functionality with Layout Switching
+
 document.addEventListener('DOMContentLoaded', function() {
     const themeToggle = document.getElementById('theme-toggle');
     if (!themeToggle) return; // Safety check
@@ -34,6 +80,12 @@ document.addEventListener('DOMContentLoaded', function() {
             themeIcon.classList.replace('fa-sun', 'fa-moon');
             switchToOriginalLayout();
         }
+        
+        // Scroll to top smoothly to showcase the theme transition
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
         
         // Reinitialize Kareem zoom effect for new theme
         initKareemZoomEffect();
@@ -794,6 +846,12 @@ document.addEventListener('DOMContentLoaded', function() {
             switchToVideoLayout();
             document.documentElement.setAttribute('data-theme', 'dark');
         }
+        
+        // Scroll to top smoothly to showcase the theme transition
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
         
         // Remove pulse effect
         setTimeout(() => {
