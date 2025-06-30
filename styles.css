@@ -2932,6 +2932,94 @@ html {
     }
 }
 
+/* Brand Signature - Same styling as navigation logo */
+.brand-signature {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.brand-signature:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.signature-logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.signature-logo-text {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.2rem;
+    font-weight: 900;
+    display: flex;
+    gap: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.signature-logo-letter {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.signature-logo-letter:hover {
+    transform: translateY(-3px) scale(1.1);
+    filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+}
+
+.signature-logo-letter:nth-child(1) {
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+.signature-logo-letter:nth-child(2) {
+    animation: logoFloat 3s ease-in-out infinite 0.5s;
+}
+
+/* Dark mode brand signature styling */
+[data-theme="dark"] .signature-logo-letter {
+    background: linear-gradient(45deg, #6a1b9a, #8e44ad, #5d4e75, #7b68ee, #ba68c8);
+    background-size: 500% 500%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: logoFloat 3s ease-in-out infinite, logoColorChange 2s ease-in-out infinite;
+}
+
+/* Mobile adjustments for brand signature */
+@media (max-width: 768px) {
+    .brand-signature {
+        top: 15px;
+        right: 15px;
+    }
+    
+    .signature-logo-text {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand-signature {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .signature-logo-text {
+        font-size: 0.9rem;
+    }
+}
+
 /* Mobile logo adjustments */
 @media (max-width: 768px) {
     .logo-text {
