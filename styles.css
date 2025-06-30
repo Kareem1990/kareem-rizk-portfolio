@@ -1469,7 +1469,7 @@ html {
     text-align: center;
     max-width: 600px;
     width: 100%;
-    height: 550px; /* Increased from 500px to 550px */
+    min-height: 550px; /* Changed from fixed height to min-height */
     position: relative;
 }
 
@@ -1477,7 +1477,7 @@ html {
     position: relative;
     width: 280px;
     height: 280px;
-    margin-bottom: 4rem; /* Increased from 3rem to 4rem */
+    margin-bottom: 2.5rem; /* Reduced from 4rem to bring content closer */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1505,7 +1505,7 @@ html {
 .certification-info {
     max-width: 500px;
     width: 100%;
-    height: 140px;
+    min-height: 140px; /* Changed from fixed height to min-height */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -1515,9 +1515,9 @@ html {
 .cert-title {
     font-size: 1.8rem;
     color: var(--text-color);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem; /* Reduced from 2rem to bring description closer */
     font-weight: 600;
-    height: 2.5rem;
+    min-height: 2.5rem; /* Changed from fixed height to min-height */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1528,12 +1528,12 @@ html {
     font-size: 1.1rem;
     color: var(--text-secondary);
     line-height: 1.6;
-    height: 70px;
+    min-height: 70px; /* Changed from fixed height to min-height */
     display: flex;
     align-items: flex-start;
     justify-content: center;
     text-align: center;
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to visible */
     flex-shrink: 0;
 }
 
@@ -1922,29 +1922,38 @@ html {
     .certifications-carousel {
         flex-direction: column;
         padding: 1rem 0;
-        min-height: 400px;
+        min-height: 450px; /* Increased from 400px to ensure button visibility */
+        /* Add padding to accommodate buttons */
+        padding-left: 70px; /* Increased from 60px */
+        padding-right: 70px; /* Increased from 60px */
+        padding-bottom: 2rem; /* Add bottom padding for any content */
     }
     
     .certification-display {
-        height: 400px; /* Increased from 350px to 400px */
+        min-height: 450px; /* Changed from fixed height to min-height */
     }
     
     .carousel-btn {
-        top: 110px;
+        top: 80px; /* Moved much closer to the image center */
+        /* Make buttons smaller on mobile */
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+        z-index: 10; /* Ensure buttons are above other content */
     }
     
     .prev-btn {
-        left: -60px;
+        left: -55px; /* Adjusted to ensure full visibility */
     }
     
     .next-btn {
-        right: -60px;
+        right: -55px; /* Adjusted to ensure full visibility */
     }
     
     .certification-badge {
         width: 220px;
         height: 220px;
-        margin-bottom: 3rem; /* Increased from default to 3rem for mobile */
+        margin-bottom: 2rem; /* Reduced from 3rem for tighter mobile layout */
     }
     
     .cert-image {
@@ -1953,18 +1962,19 @@ html {
     }
     
     .certification-info {
-        height: 120px;
+        min-height: 140px; /* Changed from fixed height to min-height */
+        margin-bottom: 20px; /* Add bottom margin for breathing room */
     }
     
     .cert-title {
         font-size: 1.5rem;
-        height: 2rem;
-        margin-bottom: 1.5rem;
+        min-height: 2rem; /* Changed from fixed height to min-height */
+        margin-bottom: 1rem; /* Reduced from 1.5rem for tighter spacing */
     }
     
     .cert-description {
         font-size: 1rem;
-        height: 60px;
+        min-height: 60px; /* Changed from fixed height to min-height */
     }
     
     .tech-icons i {
@@ -2367,6 +2377,12 @@ html {
     border-top: 1px solid var(--border-color);
 }
 
+.footer-logo {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
 /* Animations */
 @keyframes fadeInUp {
     from {
@@ -2626,6 +2642,49 @@ html {
         padding-top: 130px !important;
     }
     
+    /* Certification buttons fix for very small screens */
+    .certifications-carousel {
+        padding-left: 60px; /* Increased from 50px */
+        padding-right: 60px; /* Increased from 50px */
+        min-height: 480px; /* Increased for small screens */
+        padding-bottom: 2rem; /* Add bottom padding */
+    }
+    
+    .certification-display {
+        min-height: 480px; /* Changed from fixed height to min-height */
+    }
+    
+    .carousel-btn {
+        top: 70px; /* Even closer to image center for small screens */
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+        z-index: 10; /* Ensure visibility */
+    }
+    
+    .prev-btn {
+        left: -50px; /* Adjusted for better visibility */
+    }
+    
+    .next-btn {
+        right: -50px; /* Adjusted for better visibility */
+    }
+    
+    .certification-badge {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .cert-image {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .certification-info {
+        min-height: 160px; /* Changed from fixed height to min-height */
+        margin-bottom: 30px; /* Extra bottom margin */
+    }
+    
     .hero-main-text {
         font-size: 2rem;
         white-space: normal;
@@ -2649,6 +2708,57 @@ html {
 
     .section-title {
         font-size: 2rem;
+    }
+}
+
+/* Alternative mobile layout for certification buttons on very small screens */
+@media (max-width: 360px) {
+    .certifications-carousel {
+        padding-left: 40px;
+        padding-right: 40px;
+        min-height: 500px; /* Increased for very small screens */
+    }
+    
+    .certification-display {
+        min-height: 500px; /* Changed from fixed height to min-height */
+    }
+    
+    .carousel-btn {
+        top: 60px; /* Closest to image center for very small screens */
+        width: 35px;
+        height: 35px;
+        font-size: 0.8rem;
+    }
+    
+    .prev-btn {
+        left: -40px;
+    }
+    
+    .next-btn {
+        right: -40px;
+    }
+    
+    .certification-badge {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .cert-image {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .certification-info {
+        min-height: 180px; /* Changed from fixed height to min-height */
+        margin-bottom: 40px; /* Maximum bottom margin */
+    }
+    
+    .cert-title {
+        font-size: 1.3rem;
+    }
+    
+    .cert-description {
+        font-size: 0.9rem;
     }
 }
 
