@@ -2762,6 +2762,32 @@ html {
     }
 }
 
+/* Signature logo styling for project cards only */
+.project-signature {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 5;
+}
+
+.project-signature .logo-text {
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
+
+/* Mobile adjustments for project signatures */
+@media (max-width: 768px) {
+    .project-signature .logo-text {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-signature .logo-text {
+        font-size: 0.7rem;
+    }
+}
+
 /* Cool Logo Styling */
 .logo-link {
     text-decoration: none;

@@ -517,6 +517,15 @@ function loadArticles() {
 function createProjectCard(project) {
     return `
         <div class="project-card">
+            <!-- Project signature logo -->
+            <div class="project-signature">
+                <a href="#home" class="logo-link">
+                    <span class="logo-text">
+                        <span class="logo-letter">K</span>
+                        <span class="logo-letter">R</span>
+                    </span>
+                </a>
+            </div>
             <div class="project-image">
                 ${project.thumbnail ? 
                     `<img src="${project.thumbnail}" alt="${project.title}" loading="lazy">` :
