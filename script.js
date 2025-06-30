@@ -311,15 +311,14 @@ document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', 
     navMenu.classList.remove('active');
 }));
 
-// Smooth scrolling for navigation links
+// Simple smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
             target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+                behavior: 'smooth'
             });
         }
     });
@@ -404,11 +403,29 @@ const articles = (typeof portfolioConfig !== 'undefined' && portfolioConfig.arti
     ? portfolioConfig.articles 
     : [];
 
-// Function to create article cards
+// Function to create article cards with proper file handling
 function createArticleCard(article) {
     const isExternal = article.link.startsWith('http');
-    const linkText = isExternal ? 'Read Article' : 'View PDF';
-    const linkClass = isExternal ? 'article-link' : 'article-link pdf';
+    const isPDF = article.link.toLowerCase().includes('.pdf');
+    const isPowerPoint = article.link.toLowerCase().includes('.pptx') || article.link.toLowerCase().includes('.ppt');
+    
+    // Determine link text and icon based on file type
+    let linkText, iconClass;
+    if (isExternal) {
+        linkText = 'Read Article';
+        iconClass = 'fa-external-link-alt';
+    } else if (isPDF) {
+        linkText = 'View PDF';
+        iconClass = 'fa-file-pdf';
+    } else if (isPowerPoint) {
+        linkText = 'View Presentation';
+        iconClass = 'fa-file-powerpoint';
+    } else {
+        linkText = 'View Document';
+        iconClass = 'fa-file';
+    }
+    
+    const linkClass = isExternal ? 'article-link' : 'article-link document';
     const categoryClass = article.category === 'forbes' ? 'forbes' : 'academic';
     const categoryText = article.category === 'forbes' ? 'Forbes' : 'UMGC';
     
@@ -422,8 +439,8 @@ function createArticleCard(article) {
                 <div class="article-type">${article.type}</div>
                 <h3 class="article-title">${article.title}</h3>
                 <div class="article-publication">${article.publication}</div>
-                <a href="${article.link}" target="_blank" class="${linkClass}">
-                    <i class="fas ${isExternal ? 'fa-external-link-alt' : 'fa-file-pdf'}"></i> ${linkText}
+                <a href="${article.link}" target="_blank" rel="noopener noreferrer" class="${linkClass}">
+                    <i class="fas ${iconClass}"></i> ${linkText}
                 </a>
             </div>
         </div>
@@ -432,18 +449,15 @@ function createArticleCard(article) {
 
 // Load articles into the grid
 function loadArticles() {
-    console.log('Loading articles...', articles); // Debug log
+    // Get articles directly from config to avoid timing issues
+    const articlesData = (typeof portfolioConfig !== 'undefined' && portfolioConfig.articles) 
+        ? portfolioConfig.articles 
+        : [];
+    
     const articlesGrid = document.getElementById('articles-grid');
-    if (articlesGrid) {
-        if (articles && articles.length > 0) {
-            articlesGrid.innerHTML = articles.map(article => createArticleCard(article)).join('');
-            console.log('Articles loaded successfully');
-        } else {
-            console.log('No articles found');
-            articlesGrid.innerHTML = '<p>No articles available at the moment.</p>';
-        }
-    } else {
-        console.log('Articles grid element not found');
+    
+    if (articlesGrid && articlesData && articlesData.length > 0) {
+        articlesGrid.innerHTML = articlesData.map(article => createArticleCard(article)).join('');
     }
 }
 
@@ -464,9 +478,9 @@ function createProjectCard(project) {
                     ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
                 </div>
                 <div class="project-links">
-                    <a href="${project.githubUrl}" target="_blank" class="project-link">
+                    ${project.githubUrl ? `<a href="${project.githubUrl}" target="_blank" class="project-link">
                         <i class="fab fa-github"></i> Code
-                    </a>
+                    </a>` : ''}
                     ${project.liveUrl ? `<a href="${project.liveUrl}" target="_blank" class="project-link">
                         <i class="fas fa-external-link-alt"></i> Live Demo
                     </a>` : ''}
@@ -476,21 +490,43 @@ function createProjectCard(project) {
     `;
 }
 
-// Load projects into the grid
+// Load projects into the grid with debugging
 function loadProjects() {
-    console.log('Loading projects...', projects); // Debug log
+    console.log('=== LOADING PROJECTS ===');
+    console.log('portfolioConfig available:', typeof portfolioConfig !== 'undefined');
+    
+    // Get projects directly from config to avoid timing issues
+    const projectsData = (typeof portfolioConfig !== 'undefined' && portfolioConfig.projects) 
+        ? portfolioConfig.projects 
+        : [];
+    
+    console.log('Projects data:', projectsData);
+    console.log('Projects count:', projectsData.length);
+    
     const projectsGrid = document.getElementById('projects-grid');
+    console.log('Projects grid found:', !!projectsGrid);
+    
     if (projectsGrid) {
-        if (projects && projects.length > 0) {
-            projectsGrid.innerHTML = projects.map(project => createProjectCard(project)).join('');
-            console.log('Projects loaded successfully');
+        if (projectsData && projectsData.length > 0) {
+            console.log('Creating project cards...');
+            const projectCards = projectsData.map((project, index) => {
+                console.log(`Project ${index + 1}:`, project.title);
+                return createProjectCard(project);
+            });
+            projectsGrid.innerHTML = projectCards.join('');
+            console.log('✅ Projects loaded successfully');
+            
+            // Check if project cards are in DOM
+            const cards = projectsGrid.querySelectorAll('.project-card');
+            console.log('Project cards found:', cards.length);
         } else {
-            console.log('No projects found');
-            projectsGrid.innerHTML = '<p>No projects available at the moment.</p>';
+            console.log('❌ No projects data found');
+            projectsGrid.innerHTML = '<div style="text-align: center; padding: 2rem;"><p>Projects loading...</p></div>';
         }
     } else {
-        console.log('Projects grid element not found');
+        console.log('❌ Projects grid element not found');
     }
+    console.log('=== END LOADING PROJECTS ===');
 }
 
 // EmailJS Configuration
@@ -568,6 +604,13 @@ const observer = new IntersectionObserver((entries) => {
 document.addEventListener('DOMContentLoaded', function() {
     loadProjects();
     loadArticles();
+    
+    // Retry loading after a delay in case config.js is slow
+    setTimeout(() => {
+        console.log('Retrying projects and articles loading...');
+        loadProjects();
+        loadArticles();
+    }, 500);
     
     // Initialize fade-in animations
     initFadeInAnimations();
@@ -892,3 +935,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize skills progress bars
     initSkillsProgress();
 });
+

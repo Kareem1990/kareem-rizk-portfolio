@@ -3038,3 +3038,77 @@ html {
         font-size: 0.9rem;
     }
 }
+/* Enhanced Article Link Styling for Different File Types */
+.article-link.document {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+}
+
+.article-link.document:hover {
+    background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+    transform: scale(1.05);
+}
+
+.article-link i.fa-file-pdf {
+    color: white !important;
+}
+
+.article-link i.fa-file-powerpoint {
+    color: white !important;
+}
+
+.article-link i.fa-file {
+    color: #7f8c8d;
+}
+
+/* Article buttons - All purple styling */
+.article-link {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    margin-top: auto;
+    align-self: flex-start;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(142, 68, 173, 0.3);
+}
+
+.article-link:hover {
+    background: linear-gradient(135deg, #7d3c98 0%, #8e44ad 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(142, 68, 173, 0.4);
+}
+
+/* Override document class to also be purple */
+.article-link.document {
+    background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%) !important;
+    color: white !important;
+}
+
+.article-link.document:hover {
+    background: linear-gradient(135deg, #7d3c98 0%, #8e44ad 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(142, 68, 173, 0.4);
+}
+/* No articles fallback styling */
+.no-articles {
+    text-align: center;
+    padding: 3rem;
+    background: var(--card-bg);
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 25px var(--shadow);
+}
+
+.no-articles p {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    opacity: 0.8;
+}

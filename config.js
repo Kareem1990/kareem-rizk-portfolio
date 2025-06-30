@@ -106,9 +106,20 @@ const portfolioConfig = {
             title: "Al Said Foundation Website",
             description: "Collaborative project for a charitable foundation. Built two versions of the site — one using Angular and another using WordPress — with custom CSS and JavaScript for enhanced UI/UX.",
             technologies: ["Angular", "WordPress", "CSS", "JavaScript", "UI/UX Design"],
-            githubUrl: "https://github.com/Kareem1990/alsaid-foundation",
+            githubUrl: null,
+            liveUrl: "https://alsaidfoundation.org/",
             icon: "🏛️",
             thumbnail: "assets/alsaid.jpeg",
+            featured: true
+        },
+        {
+            title: "Personal Portfolio Website",
+            description: "A modern, responsive portfolio website showcasing my cloud engineering and data projects. Features dynamic content loading, smooth animations, dark/light mode toggle, and AWS S3 deployment with CloudFront CDN.",
+            technologies: ["HTML5", "CSS3", "JavaScript", "AWS S3", "CloudFront", "Route 53", "Responsive Design"],
+            githubUrl: "https://github.com/Kareem1990/kareem-rizk-portfolio",
+            liveUrl: "http://kareem-portfolio-site.s3-website-us-east-1.amazonaws.com/",
+            icon: "💼",
+            thumbnail: "assets/kareem-photo.jpg",
             featured: true
         }
     ],
@@ -128,14 +139,14 @@ const portfolioConfig = {
             type: "Industry Article", 
             publication: "Forbes Middle East",
             link: "https://www.forbesmiddleeast.com/innovation/technology/great-historical-efforts-behind-assassins-creed-origins",
-            thumbnail: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=400&h=250&fit=crop&auto=format",
+            thumbnail: "assets/as-origins.jpg",
             category: "forbes"
         },
         {
             title: "BallotOnline's Cloud Adoption Plan: Strategic, Scalable, Secure",
             type: "Graduate Project (UMGC)",
             publication: "University of Maryland Global Campus",
-            link: "assets/docs/BallotOnline's-Cloud-Adoption-Plan-Kareem-Rizk.pdf",
+            link: "assets/BallotOnline-Cloud-Adoption-Plan-Kareem-Rizk.pptx",
             thumbnail: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=250&fit=crop&auto=format",
             category: "academic"
         },
@@ -143,7 +154,7 @@ const portfolioConfig = {
             title: "Cloud Risk, Compliance, and Data Governance Analysis",
             type: "Graduate Project (UMGC)",
             publication: "University of Maryland Global Campus", 
-            link: "assets/docs/BallotOnline-Cloud-Adoption-Risk-Compliance-and-Data-Governance-Analysis.pdf",
+            link: "assets/BallotOnline-Cloud-Adoption-Risk-Compliance-and-Data-Governance-Analysis.pdf",
             thumbnail: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop&auto=format",
             category: "academic"
         },
@@ -151,7 +162,7 @@ const portfolioConfig = {
             title: "AWS vs Azure Architecture, Cost, and Security Comparison",
             type: "Graduate Project (UMGC)",
             publication: "University of Maryland Global Campus",
-            link: "assets/docs/Kareem-Rizk-BallotOnline-Cloud-Migration-Report.pdf", 
+            link: "assets/Kareem-Rizk-BallotOnline-Cloud-Migration-Report-Architecture-Cost-and-Security-Comparison.pdf", 
             thumbnail: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop&auto=format",
             category: "academic"
         }

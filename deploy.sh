@@ -117,7 +117,48 @@ aws s3 cp config.js s3://$BUCKET_NAME/ \
     --cache-control "max-age=86400" \
     --profile $PROFILE
 
-# Upload assets folder
+# Upload assets folder with proper content types
+print_status "Uploading assets with proper content types..."
+
+# Upload PDFs
+aws s3 sync assets/ s3://$BUCKET_NAME/assets/ \
+    --exclude "*" \
+    --include "*.pdf" \
+    --content-type "application/pdf" \
+    --cache-control "max-age=2592000" \
+    --profile $PROFILE
+
+# Upload PowerPoint files with proper content type
+aws s3 sync assets/ s3://$BUCKET_NAME/assets/ \
+    --exclude "*" \
+    --include "*.pptx" \
+    --include "*.ppt" \
+    --content-type "application/vnd.openxmlformats-officedocument.presentationml.presentation" \
+    --content-disposition "attachment" \
+    --cache-control "max-age=2592000" \
+    --profile $PROFILE
+
+# Upload images
+aws s3 sync assets/ s3://$BUCKET_NAME/assets/ \
+    --exclude "*" \
+    --include "*.jpg" \
+    --include "*.jpeg" \
+    --include "*.png" \
+    --include "*.gif" \
+    --content-type "image/*" \
+    --cache-control "max-age=2592000" \
+    --profile $PROFILE
+
+# Upload videos
+aws s3 sync assets/ s3://$BUCKET_NAME/assets/ \
+    --exclude "*" \
+    --include "*.mov" \
+    --include "*.mp4" \
+    --content-type "video/*" \
+    --cache-control "max-age=2592000" \
+    --profile $PROFILE
+
+# Upload remaining files
 aws s3 sync assets/ s3://$BUCKET_NAME/assets/ \
     --cache-control "max-age=2592000" \
     --profile $PROFILE
