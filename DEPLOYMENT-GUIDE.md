@@ -10,10 +10,10 @@
 ### One-Command Deployment
 ```bash
 # Test first (recommended)
-./test-before-deploy.sh
+./scripts/test-before-deploy.sh
 
 # Deploy to AWS
-./deploy.sh
+./scripts/deploy.sh
 ```
 
 ## Manual Deployment Steps

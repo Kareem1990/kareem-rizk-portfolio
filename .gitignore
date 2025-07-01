@@ -25,7 +25,19 @@ dev-diary.txt
 learning-notes.md
 project-ideas.txt
 
-
+# Media Files (handled separately)
 *.mov
 *.mp4
+
+# Temporary and Backup Files
+*.backup
+*_backup*
+temp-*
+test-*
+.DS_Store
+Thumbs.db
+
+# Development Tools
+generate_architecture_diagram.py
+*.gv
 

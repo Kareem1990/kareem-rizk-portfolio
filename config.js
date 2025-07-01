@@ -117,7 +117,7 @@ const portfolioConfig = {
             description: "A modern, responsive portfolio website showcasing my cloud engineering and data projects. Features dynamic content loading, smooth animations, dark/light mode toggle, and AWS S3 deployment with CloudFront CDN.",
             technologies: ["HTML5", "CSS3", "JavaScript", "AWS S3", "CloudFront", "Route 53", "Responsive Design"],
             githubUrl: "https://github.com/Kareem1990/kareem-rizk-portfolio",
-            liveUrl: "http://kareem-portfolio-site.s3-website-us-east-1.amazonaws.com/",
+            liveUrl: "https://www.kareemrizk.tech/",
             icon: "💼",
             thumbnail: "assets/kareem-photo.jpg",
             featured: true

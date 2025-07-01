@@ -6,7 +6,8 @@
 
 **A Modern, Responsive Portfolio Showcasing Cloud Engineering & Data Solutions**
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_Site-blue?style=for-the-badge)](http://kareem-portfolio-site.s3-website-us-east-1.amazonaws.com/)
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_Site-blue?style=for-the-badge)](https://kareemrizk.tech)
+[![Custom Domain](https://img.shields.io/badge/🌍_Domain-kareemrizk.tech-green?style=for-the-badge)](https://www.kareemrizk.tech)
 [![GitHub](https://img.shields.io/badge/📂_Source_Code-GitHub-black?style=for-the-badge)](https://github.com/Kareem1990/kareem-rizk-portfolio)
 
 </div>
@@ -53,6 +54,33 @@ AWS Services:
 - **Git**: Version control and collaboration
 - **AWS CLI**: Infrastructure deployment and management
 - **Responsive Testing**: Cross-device compatibility validation
+
+---
+
+## 🏗️ **System Architecture**
+
+![Portfolio Architecture](./portfolio_architecture.png)
+
+The portfolio website follows a modern, cloud-native architecture designed for **global performance**, **scalability**, and **cost-effectiveness**:
+
+### **Architecture Components**
+
+| **Layer** | **Service** | **Purpose** | **Benefits** |
+|-----------|-------------|-------------|--------------|
+| **DNS & SSL** | Route 53 + ACM | Custom domain routing & SSL certificates | Professional branding, secure connections |
+| **CDN** | CloudFront | Global content delivery network | Fast loading worldwide, reduced latency |
+| **Hosting** | S3 Static Website | Serverless web hosting | Cost-effective, highly available |
+| **Assets** | S3 Storage | Media and document storage | Scalable, reliable asset delivery |
+| **Monitoring** | CloudWatch | Performance & access monitoring | Real-time insights, optimization data |
+
+### **Traffic Flow**
+1. **User Request** → Custom domain (kareemrizk.tech/www.kareemrizk.tech)
+2. **DNS Resolution** → Route 53 directs to CloudFront
+3. **CDN Delivery** → CloudFront serves cached content from nearest edge location
+4. **Origin Fetch** → On cache miss, CloudFront fetches from S3
+5. **SSL Termination** → Certificate Manager provides secure HTTPS connections
+
+> 📋 **[View Detailed Architecture Documentation](./ARCHITECTURE.md)** for comprehensive technical specifications, performance metrics, and deployment procedures.
 
 ---
 
@@ -109,11 +137,12 @@ AWS Services:
 
 ## 🚀 **Live Demo & Deployment**
 
-### **🌐 [Visit Live Portfolio](http://kareem-portfolio-site.s3-website-us-east-1.amazonaws.com/)**
+### **🌐 [Visit Live Portfolio](https://kareemrizk.tech)**
+### **🌍 [Alternative URL](https://www.kareemrizk.tech)**
 
 **Deployment Architecture:**
 ```
-User Request → Route 53 → CloudFront CDN → S3 Static Website
+User Request → Route 53 (kareemrizk.tech) → CloudFront CDN → S3 Static Website
                 ↓
             Global Edge Locations (Low Latency)
 ```
@@ -218,7 +247,27 @@ open index.html
 
 # Or serve locally
 python -m http.server 8000
+
+# Deploy to AWS (requires AWS CLI setup)
+./scripts/deploy.sh
 ```
+
+## 📁 **Project Structure**
+
+```
+portfolio-site/
+├── 📄 index.html              # Main website
+├── 🎨 styles.css              # Styling & responsive design
+├── ⚡ script.js               # Interactive functionality
+├── ⚙️  config.js              # Site configuration
+├── 🏗️ ARCHITECTURE.md         # Technical architecture
+├── 🚀 DEPLOYMENT-GUIDE.md     # AWS deployment guide
+├── 📁 assets/                 # Images, videos, documents
+├── 📁 scripts/                # Deployment automation
+└── 📁 docs/                   # Development guides
+```
+
+> 📋 **[View Complete Project Structure](./PROJECT-STRUCTURE.md)** for detailed organization and file descriptions.
 
 ---
 
