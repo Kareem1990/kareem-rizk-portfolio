@@ -1354,15 +1354,11 @@ html {
     opacity: 0.1;
     animation: digitalScan 3s linear infinite;
 }
-    margin-left: 2px;
-}
 
 @keyframes blink {
     0%, 50% { opacity: 1; }
     51%, 100% { opacity: 0; }
 }
-
-
 
 /* Profile Photo Styles */
 .profile-photo {
@@ -2413,10 +2409,7 @@ html {
     }
 }
 
-/* Clean animations without filter effects */
-
 /* Clean animations without glitch effects */
-
 @keyframes digitalScan {
     0% {
         background-position: -200% 0;
@@ -3170,7 +3163,7 @@ html {
     }
 }
 
-[data-theme="dark"] @keyframes themePulse {
+@keyframes themePulseDark {
     0%, 100% {
         box-shadow: 0 8px 25px rgba(15, 52, 96, 0.4);
     }
